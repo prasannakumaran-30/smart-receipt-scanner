@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Receipt Scanner</title>
+</head>
+<body>
+    <h2>Upload Receipt</h2>
+    <input type="file" id="receipt">
+    <button onclick="upload()">Scan</button>
+
+    <h3>Extracted Info:</h3>
+    <div id="result"></div>
+
+    <script>
+        function upload() {
+            const file = document.getElementById("receipt").files[0];
+            let formData = new FormData();
+            formData.append("image", file);
+
+            fetch("http://localhost:5000/ocr", {
+                method: "POST",
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("result").innerHTML =
+                    "<b>Amount:</b> " + data.amount + "<br>" +
+                    "<b>Category:</b> " + data.category + "<br>" +
+                    "<pre>" + data.raw_text + "</pre>";
+            });
+        }
+    </script>
+</body>
+</html>
