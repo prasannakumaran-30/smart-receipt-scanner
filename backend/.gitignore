@@ -1,0 +1,9 @@
+# Data file for analytics (do not push)
+data.json
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Temporary OCR images
+temp.jpg

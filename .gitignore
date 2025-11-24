@@ -1,4 +1,13 @@
+# Python cache
 __pycache__/
 *.pyc
+
+# Temporary files
 temp.jpg
+
+# Environment
 .env
+
+# Backend data file (DO NOT TRACK)
+backend/data.json
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Analytics</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h2>Expense Analytics</h2>
+
+  <p>Total Receipts Processed: <span id="count">0</span></p>
+  <p>Total Amount: ₹<span id="total">0</span></p>
+
+  <canvas id="chart" width="400" height="400"></canvas>
+
+  <script>
+    async function loadData() {
+      try {
+        let res = await fetch("http://127.0.0.1:5000/analytics");
+        let data = await res.json();
+
+        document.getElementById("count").innerText = data.count;
+        document.getElementById("total").innerText = data.total_sum;
+
+        const ctx = document.getElementById("chart").getContext("2d");
+        new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: Object.keys(data.by_category),
+            datasets: [{
+              data: Object.values(data.by_category),
+            }]
+          }
+        });
+
+      } catch (err) {
+        alert("Error loading analytics.");
+      }
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
